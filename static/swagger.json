@@ -1,0 +1,134 @@
+
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "这里是提交用户邮箱，需求相关的API",
+    "version": "1.0.0",
+    "title": "小程序表单API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+
+ "components": {
+        "schemas": {
+            "添加条目": {
+                "type": "object",
+                "properties": {
+                   "email": {
+                    "type": "string"
+                    },
+                    "description": {
+                    "type": "string"
+                    }
+                }
+            },
+           "获取条目": {
+                "type": "object",
+                "properties": {
+                   "id": {
+                    "type": "string"
+                    },
+                   "email": {
+                    "type": "string"
+                    }
+                }
+            },
+           "数据库里的user表": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                    },
+                   "email": {
+                    "type": "string"
+                    },
+                    "description": {
+                    "type": "string"
+                    }
+                }
+            }
+        }
+ },
+
+
+
+
+
+"paths": {
+        "/submit": {
+            "post": {
+            "tags": [
+                "向数据库添加一条数据"
+            ],
+            "summary": "添加数据",
+            "requestBody": {
+            "description": "给数据库post新的数据，email格式需要正确，description是用户给出的描述",
+            "required": true,
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/添加条目"
+                    }
+                }
+            }
+            },
+            "responses": {
+                "0": {
+                    "description": "添加成功",
+                    "schema": {
+                    "$ref": "#/components/schemas/添加条目"
+                    }
+                },
+                "-1": {
+                    "description": "异常",
+                    "schema": {
+                    "$ref": "#/components/schemas/添加条目"
+                    }
+            }
+            }
+            }
+
+        },
+
+
+        "/query":{
+
+            "post" :{
+                "tags": [
+                    "用id或email或两者都有来获取条目"
+                ],
+                "summary": "获取条目",
+              "requestBody": {
+            "description": "id,email需要传其中的一个,或两者都传",
+            "required": true,
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/获取条目"
+                    }
+                }
+            }
+            },
+
+                "responses": {
+                "0": {
+                    "description": "查询成功",
+                    "schema": {
+                    "$ref": "#/components/schemas/获取条目"
+                    }
+                },
+                "-1": {
+                    "description": "异常",
+                    "schema": {
+                    "$ref": "#/components/schemas/获取条目"
+                    }
+            }
+            }
+            }
+            }
+
+
+        }
+}

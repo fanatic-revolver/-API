@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/submit" method="POST" enctype="application/json">
+        <input type="text" name="email" >
+        <input type="text" name="description" >
+        <input type="submit" value="Submit">
+    </form>
+</body>
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var form = new FormData(this);
+        var data = {};
+        form.forEach(function(value, key){
+            data[key] = value;
+        });
+        fetch('/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Error: ' + response.status);
+            }
+        })
+        .then(function(result) {
+            console.log(result);
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+    });
+</script>
+</html>
